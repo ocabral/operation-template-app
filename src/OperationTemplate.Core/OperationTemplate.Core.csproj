@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>StoneCo.Buy4.OperationTemplate.Core</AssemblyName>
+    <RootNamespace>StoneCo.Buy4.OperationTemplate.Core</RootNamespace>
+    <Copyright>©StoneCo</Copyright>
+    <PackageId>StoneCo.Buy4.OperationTemplate.Core</PackageId>
+    <Authors>StoneCo.Buy4.OperationTemplate.Core</Authors>
+    <Product>StoneCo.Buy4.OperationTemplate.Core</Product>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OperationTemplate.DataContracts\OperationTemplate.DataContracts.csproj" />
+  </ItemGroup>
+
+</Project>
