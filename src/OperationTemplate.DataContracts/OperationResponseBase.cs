@@ -8,6 +8,28 @@ namespace StoneCo.Buy4.OperationTemplate.DataContracts
     /// </summary>
     public class OperationResponseBase
     {
+        #region Properties
+
+        /// <summary>
+        /// Indicates if operation completed without errors.
+        /// </summary>
+        public bool Success { get; protected set; }
+
+        /// <summary>
+        /// Detailed results of a method execution.
+        /// </summary>
+        public List<OperationError> Errors { get; protected set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        //[JsonIgnore]
+        public OperationResponseHttpStatusCode HttpStatusCode { get; set; }
+
+        #endregion
+
+        #region Constructor 
+
         /// <summary>
         /// Default constructor.
         /// </summary>
@@ -32,21 +54,9 @@ namespace StoneCo.Buy4.OperationTemplate.DataContracts
             }
         }
 
-        /// <summary>
-        /// Indicates if operation completed without errors.
-        /// </summary>
-        public bool Success { get; protected set; }
+        #endregion
 
-        /// <summary>
-        /// Detailed results of a method execution.
-        /// </summary>
-        public List<OperationError> Errors { get; protected set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [JsonIgnore]
-        public OperationResponseHttpStatusCode HttpStatusCode { get; set; }
+        #region Public methods
 
         /// <summary>
         /// Add a error to response.
@@ -73,13 +83,27 @@ namespace StoneCo.Buy4.OperationTemplate.DataContracts
         }
 
         /// <summary>
-        /// The HttpStatusCode will be set to 200 (Ok).
+        /// Set success to true.
+        /// The HttpStatusCode will be set to 200 (Ok) by default.
         /// </summary>
         public void SetSuccessOk()
         {
             this.Success = true;
             this.HttpStatusCode = OperationResponseHttpStatusCode.Ok;
         }
+
+        /// <summary>
+        /// Set Successto false.
+        /// The HttpStatusCode will be set to 500 (InternalServerError) by default.
+        /// </summary>
+        public void SetInternalServerError()
+        {
+            this.Success = false;
+            this.HttpStatusCode = OperationResponseHttpStatusCode.InternalServerError;
+            this.Errors.Add(new OperationError("xxx", "An internal server error occurred while processing the request."));
+        }
+
+        #endregion
     }
 
     /// <inheritdoc />

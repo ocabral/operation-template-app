@@ -10,8 +10,8 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations
     /// the same best practices and have a similar workflow keeping the project 
     /// extensible and with the same pattern.
     /// </summary>
-    /// <typeparam name="TRequest">Request to the operation.</typeparam>
-    /// <typeparam name="TResponse">Response from the operation.</typeparam>
+    /// <typeparam name="TRequest">Request of operation. See <see cref="OperationRequestBase" /> for more information.</typeparam>
+    /// <typeparam name="TResponse">Response of operation. See <see cref="OperationResponseBase" /> for more information.</typeparam>
     public interface IOperation<TRequest, TResponse> : IDisposable
         where TRequest : OperationRequestBase
         where TResponse : OperationResponseBase, new()
@@ -19,7 +19,7 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations
         /// <summary>
         /// Process the operation. The implementation must apply the processing logic.
         /// </summary>
-        /// <param name="request">The request object to be processed. <see cref="OperationRequestBase" /> for more information.</param>
+        /// <param name="request">The request object to be processed. See <see cref="OperationRequestBase" /> for more information.</param>
         /// <returns>The operation response. See <see cref="OperationResponseBase" /> for more information.</returns>
         Task<TResponse> ProcessAsync(TRequest request);
     }

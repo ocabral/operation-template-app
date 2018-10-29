@@ -8,6 +8,7 @@
     <PackageId>StoneCo.Buy4.OperationTemplate.DataContracts</PackageId>
     <Authors>StoneCo.Buy4.OperationTemplate.DataContracts</Authors>
     <Product>StoneCo.Buy4.OperationTemplate.DataContracts</Product>
+    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
 
 </Project>
