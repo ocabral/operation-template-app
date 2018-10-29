@@ -2,6 +2,7 @@
 using StoneCo.Buy4.OperationTemplate.Core.Logger;
 using StoneCo.Buy4.OperationTemplate.DataContracts;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace StoneCo.Buy4.OperationTemplate.Core.Operations
@@ -58,35 +59,38 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations
 
         public async Task<TResponse> ProcessAsync(TRequest request)
         {
-            TResponse response = new TResponse();
-
-            try
+            using (this.Logger.StartInfoTrace($"Starting operation '{this.GetType().Name}'.", tags: new List<string>() { this.GetType().Name }))
             {
-                TResponse validationResponse = await this.ValidateOperationAsync(request);
+                TResponse response = new TResponse();
 
-                if (!validationResponse.Success)
+                try
                 {
-                    response.AddErrors(validationResponse.Errors);
+                    TResponse validationResponse = await this.ValidateOperationAsync(request);
+
+                    if (!validationResponse.Success)
+                    {
+                        response.AddErrors(validationResponse.Errors);
+                        return response;
+                    }
+
+                    if (!this.IsPaginationSettingsValid(request))
+                    {
+                        response.AddError(new OperationError("xxx", "Invalid pagination parameters."));
+                        return response;
+                    }
+
+                    response = await this.ProcessOperationAsync(request);
+                }
+                catch (Exception exception)
+                {
+                    response.SetInternalServerError();
+                    this.Logger.Error("An internal error occurred while processing the request.", exception);
+
                     return response;
                 }
-
-                if (!this.IsPaginationSettingsValid(request))
-                {
-                    response.AddError(new OperationError("xxx", "Invalid pagination parameters."));
-                    return response;
-                }
-
-                response = await this.ProcessOperationAsync(request);
-            }
-            catch (Exception exception)
-            {
-                response.SetInternalServerError();
-                this.Logger.Error("An internal error occurred while processing the request.", exception);
 
                 return response;
             }
-
-            return response;
         }
 
         /// <summary>
