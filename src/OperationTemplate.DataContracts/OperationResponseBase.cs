@@ -77,9 +77,10 @@ namespace StoneCo.Buy4.OperationTemplate.DataContracts
         /// <param name="operationInfos">List of <see cref="OperationError"/>.</param>
         public void AddErrors(List<OperationError> operationInfos)
         {
-            (this.Errors ?? (this.Errors = new List<OperationError>())).AddRange(operationInfos);
             this.Success = false;
             this.HttpStatusCode = OperationResponseHttpStatusCode.BadRequest;
+
+            (this.Errors ?? (this.Errors = new List<OperationError>())).AddRange(operationInfos);
         }
 
         /// <summary>
@@ -100,7 +101,10 @@ namespace StoneCo.Buy4.OperationTemplate.DataContracts
         {
             this.Success = false;
             this.HttpStatusCode = OperationResponseHttpStatusCode.InternalServerError;
-            this.Errors.Add(new OperationError("xxx", "An internal server error occurred while processing the request."));
+
+            (this.Errors ?? (this.Errors = new List<OperationError>()))
+                .Add(new OperationError("xxx", "An internal server error occurred while processing the request."));
+            
         }
 
         #endregion

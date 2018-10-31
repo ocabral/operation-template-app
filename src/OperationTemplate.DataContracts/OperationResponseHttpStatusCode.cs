@@ -1,7 +1,7 @@
 ﻿namespace StoneCo.Buy4.OperationTemplate.DataContracts
 {
     /// <summary>
-    /// For further information of Http status code below see https://www.restapitutorial.com/httpstatuscodes.html.
+    /// For more information of Http status code below see https://www.restapitutorial.com/httpstatuscodes.html.
     /// </summary>
     public enum OperationResponseHttpStatusCode
     {
