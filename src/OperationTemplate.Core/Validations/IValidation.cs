@@ -1,4 +1,4 @@
-﻿using StoneCo.Buy4.OperationTemplate.DataContracts;
+﻿using StoneCo.Buy4.OperationTemplate.DataContracts.V1;
 using System;
 using System.Threading.Tasks;
 

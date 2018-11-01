@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace StoneCo.Buy4.OperationTemplate.DataContracts
+namespace StoneCo.Buy4.OperationTemplate.DataContracts.V1
 {
     /// <summary>
     /// The base class to be used as response from a method execution.

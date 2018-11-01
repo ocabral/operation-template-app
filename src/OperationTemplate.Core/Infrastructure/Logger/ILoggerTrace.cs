@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace StoneCo.Buy4.OperationTemplate.Core.Logger
+namespace StoneCo.Buy4.OperationTemplate.Core.Infrastructure.Logger
 {
     /// <inheritdoc />
     public interface ILogTrace : IDisposable

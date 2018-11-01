@@ -1,4 +1,4 @@
-﻿namespace StoneCo.Buy4.OperationTemplate.DataContracts
+﻿namespace StoneCo.Buy4.OperationTemplate.DataContracts.V1
 {
     /// <summary>
     /// For more information of Http status code below see https://www.restapitutorial.com/httpstatuscodes.html.

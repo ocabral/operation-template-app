@@ -1,4 +1,4 @@
-﻿namespace StoneCo.Buy4.OperationTemplate.DataContracts
+﻿namespace StoneCo.Buy4.OperationTemplate.DataContracts.V1
 {
     /// <summary>
     /// Class that can be used to hold results from a method execution, like statuses, validation errors and related stuff.

@@ -1,7 +1,8 @@
 ﻿using StoneCo.Buy4.OperationTemplate.Core.Configurations;
-using StoneCo.Buy4.OperationTemplate.Core.Logger;
+using StoneCo.Buy4.OperationTemplate.Core.Infrastructure.DatabaseProvider;
+using StoneCo.Buy4.OperationTemplate.Core.Infrastructure.Logger;
 using StoneCo.Buy4.OperationTemplate.Core.Validations;
-using StoneCo.Buy4.OperationTemplate.DataContracts;
+using StoneCo.Buy4.OperationTemplate.DataContracts.V1;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -24,9 +25,9 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations
         #region Fields and properties
 
         /// <summary>
-        /// Flag to identify if Dispose has already been called.
+        /// Flag to identify if dispose has already been called.
         /// </summary>
-        protected bool Disposed;
+        protected bool disposed;
 
         /// <summary>
         /// ILogger property used for all operations.
@@ -38,7 +39,9 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations
         /// IPaginationSettings property used for all operations.
         /// See <see cref="IPaginationSettings"/> for more information.
         /// </summary>
-        protected IPaginationSettings PaginationSettings { get; private set; }
+        protected IPaginationSettings PaginationSettings { get; }
+
+        protected UnitOfWorkBase UnitOfWork { get; }
 
         #endregion
 
@@ -48,10 +51,11 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations
         /// Constructor.
         /// </summary>
         /// <param name="logger"><see cref="ILogger"/></param>
-        protected OperationBase(ILogger logger, IPaginationSettings paginationSettings = null)
+        protected OperationBase(ILogger logger, IPaginationSettings paginationSettings = null, UnitOfWorkBase unitOfWork = null)
         {
             this.Logger = logger;
             this.PaginationSettings = paginationSettings ?? new DefaultPaginationSettings();
+            this.UnitOfWork = unitOfWork;
         }
 
         #endregion
@@ -165,10 +169,10 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations
         /// </summary>
         public void Dispose()
         {
-            if (this.Disposed) { return; }
-            this.Disposed = true;
+            if (this.disposed) { return; }
 
-            //this.UnitOfWork?.Dispose();
+            this.disposed = true;
+            this.UnitOfWork?.Dispose();
             GC.SuppressFinalize(this);
         }
 

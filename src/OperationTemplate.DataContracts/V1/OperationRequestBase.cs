@@ -1,4 +1,4 @@
-﻿namespace StoneCo.Buy4.OperationTemplate.DataContracts
+﻿namespace StoneCo.Buy4.OperationTemplate.DataContracts.V1
 {
     /// <summary>
     /// Base class for request operations.
