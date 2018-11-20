@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using StoneCo.Buy4.OperationTemplate.Core.Configurations;
+using StoneCo.Buy4.OperationTemplate.Core.Infrastructure.DatabaseProvider.Sql;
 using StoneCo.Buy4.OperationTemplate.Core.Infrastructure.Logger;
 using StoneCo.Buy4.OperationTemplate.Core.Models.HealthCheck;
 using System;
@@ -104,7 +105,7 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Infrastructure.DatabaseProvider
             try
             {
                 // Execute Sql query.
-                string sqlTemplate = null;//ManagementResource.GetDatabaseInformation; //TODO: Resolver isso.
+                string sqlTemplate = OperationTemplateSqlResource.GetDatabaseInformation;
 
                 IEnumerable<DatabaseInformation> queryResult = await this.DbConnector.Connection
                     .QueryAsync<DatabaseInformation>(sqlTemplate)

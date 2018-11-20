@@ -20,4 +20,19 @@
     <ProjectReference Include="..\OperationTemplate.DataContracts\OperationTemplate.DataContracts.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Infrastructure\DatabaseProvider\Sql\OperationTemplateSqlResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>OperationTemplateSqlResource.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Infrastructure\DatabaseProvider\Sql\OperationTemplateSqlResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>OperationTemplateSqlResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>
