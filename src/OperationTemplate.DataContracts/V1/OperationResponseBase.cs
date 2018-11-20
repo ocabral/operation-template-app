@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 
 namespace StoneCo.Buy4.OperationTemplate.DataContracts.V1
 {
@@ -24,7 +25,7 @@ namespace StoneCo.Buy4.OperationTemplate.DataContracts.V1
         /// 
         /// </summary>
         //[JsonIgnore]
-        public OperationResponseHttpStatusCode HttpStatusCode { get; set; }
+        public HttpStatusCode HttpStatusCode { get; set; }
 
         #endregion
 
@@ -50,7 +51,7 @@ namespace StoneCo.Buy4.OperationTemplate.DataContracts.V1
 
             if(errors != null && errors.Count() > 0)
             {
-                this.HttpStatusCode = OperationResponseHttpStatusCode.BadRequest;
+                this.HttpStatusCode = HttpStatusCode.BadRequest;
             }
         }
 
@@ -63,24 +64,24 @@ namespace StoneCo.Buy4.OperationTemplate.DataContracts.V1
         /// The HttpStatusCode will be set to 400 (BadRequest) by default.
         /// </summary>
         /// <param name="operationError"><see cref="OperationError"/> object.</param>
-        public void AddError(OperationError operationError)
+        public void AddError(OperationError operationError, HttpStatusCode httpStatusCode = HttpStatusCode.BadRequest)
         {
             (this.Errors ?? (this.Errors = new List<OperationError>())).Add(operationError);
             this.Success = false;
-            this.HttpStatusCode = OperationResponseHttpStatusCode.BadRequest;
+            this.HttpStatusCode = HttpStatusCode.BadRequest;
         }
 
         /// <summary>
         /// Add an error list to response.
         /// The HttpStatusCode will be set to 400 (BadRequest) by default.
         /// </summary>
-        /// <param name="operationInfos">List of <see cref="OperationError"/>.</param>
-        public void AddErrors(List<OperationError> operationInfos)
+        /// <param name="operationErrors">List of <see cref="OperationError"/>.</param>
+        public void AddErrors(List<OperationError> operationErrors, HttpStatusCode httpStatusCode = HttpStatusCode.BadRequest)
         {
             this.Success = false;
-            this.HttpStatusCode = OperationResponseHttpStatusCode.BadRequest;
+            this.HttpStatusCode = HttpStatusCode.BadRequest;
 
-            (this.Errors ?? (this.Errors = new List<OperationError>())).AddRange(operationInfos);
+            (this.Errors ?? (this.Errors = new List<OperationError>())).AddRange(operationErrors);
         }
 
         /// <summary>
@@ -90,7 +91,7 @@ namespace StoneCo.Buy4.OperationTemplate.DataContracts.V1
         public void SetSuccessOk()
         {
             this.Success = true;
-            this.HttpStatusCode = OperationResponseHttpStatusCode.Ok;
+            this.HttpStatusCode = HttpStatusCode.OK;
         }
 
         /// <summary>
@@ -100,7 +101,7 @@ namespace StoneCo.Buy4.OperationTemplate.DataContracts.V1
         public void SetInternalServerError()
         {
             this.Success = false;
-            this.HttpStatusCode = OperationResponseHttpStatusCode.InternalServerError;
+            this.HttpStatusCode = HttpStatusCode.InternalServerError;
 
             (this.Errors ?? (this.Errors = new List<OperationError>()))
                 .Add(new OperationError("xxx", "An internal server error occurred while processing the request."));

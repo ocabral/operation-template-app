@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OperationTemplate.Core", "src\OperationTemplate.Core\OperationTemplate.Core.csproj", "{1AF77C60-A6B8-4110-AD88-49BA133221B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OperationTemplate.Core", "src\OperationTemplate.Core\OperationTemplate.Core.csproj", "{1AF77C60-A6B8-4110-AD88-49BA133221B3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OperationTemplate.DataContracts", "src\OperationTemplate.DataContracts\OperationTemplate.DataContracts.csproj", "{5D90DB73-1B5B-4578-8368-AE78A0993D65}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{3B958D8A-07FF-4AAF-BAAB-ABBE82023572}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{5D90DB73-1B5B-4578-8368-AE78A0993D65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D90DB73-1B5B-4578-8368-AE78A0993D65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D90DB73-1B5B-4578-8368-AE78A0993D65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B958D8A-07FF-4AAF-BAAB-ABBE82023572}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B958D8A-07FF-4AAF-BAAB-ABBE82023572}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B958D8A-07FF-4AAF-BAAB-ABBE82023572}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B958D8A-07FF-4AAF-BAAB-ABBE82023572}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

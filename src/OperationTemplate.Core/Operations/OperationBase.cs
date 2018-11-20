@@ -1,7 +1,6 @@
 ﻿using StoneCo.Buy4.OperationTemplate.Core.Configurations;
 using StoneCo.Buy4.OperationTemplate.Core.Infrastructure.DatabaseProvider;
 using StoneCo.Buy4.OperationTemplate.Core.Infrastructure.Logger;
-using StoneCo.Buy4.OperationTemplate.Core.Validations;
 using StoneCo.Buy4.OperationTemplate.DataContracts.V1;
 using System;
 using System.Collections.Generic;
@@ -27,7 +26,7 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations
         /// <summary>
         /// Flag to identify if dispose has already been called.
         /// </summary>
-        protected bool disposed;
+        private bool disposed;
 
         /// <summary>
         /// ILogger property used for all operations.
@@ -41,7 +40,10 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations
         /// </summary>
         protected IPaginationSettings PaginationSettings { get; }
 
-        protected UnitOfWorkBase UnitOfWork { get; }
+        /// <summary>
+        /// Unit of Work responsible for handle the repositories.
+        /// </summary>
+        protected IUnitOfWork UnitOfWork { get; }
 
         #endregion
 
@@ -51,7 +53,7 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations
         /// Constructor.
         /// </summary>
         /// <param name="logger"><see cref="ILogger"/></param>
-        protected OperationBase(ILogger logger, IPaginationSettings paginationSettings = null, UnitOfWorkBase unitOfWork = null)
+        protected OperationBase(ILogger logger, IPaginationSettings paginationSettings = null, IUnitOfWork unitOfWork = null)
         {
             this.Logger = logger;
             this.PaginationSettings = paginationSettings ?? new DefaultPaginationSettings();
@@ -94,7 +96,7 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations
                 TResponse errorResponse = new TResponse();
                 errorResponse.SetInternalServerError();
 
-                this.Logger?.Error("An internal error occurred while processing the request.", exception);
+                this.Logger?.Error("An internal error occurred while processing the request.", exception, tags: new List<string>() { this.GetType().Name });
 
                 return errorResponse;
             }
@@ -117,7 +119,9 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations
             // Case the operation doesn't have a custom validation then return success = true.
             TResponse result = new TResponse();
             result.SetSuccessOk();
-            return result;
+
+            return await Task.FromResult(result);
+
         }
 
         #endregion

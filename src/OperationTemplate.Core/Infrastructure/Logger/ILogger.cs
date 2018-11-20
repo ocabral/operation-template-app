@@ -3,8 +3,21 @@ using System.Collections.Generic;
 
 namespace StoneCo.Buy4.OperationTemplate.Core.Infrastructure.Logger
 {
+    /// <summary>
+    /// Base interface for logging.
+    /// </summary>
     public interface ILogger
     {
+        /// <summary>
+        /// Event triggered before Buy4 Log write a batch of log entries.
+        /// </summary>
+        //event Action<IList<LogEntry>> Logging; //TODO: Descomentar e adicionar a biblioteca de log.
+
+        /// <summary>
+        /// Event triggered when there is an error while Buy4 Log write a batch of log entries.
+        /// </summary>
+        //event Action<IList<LogEntry>, Exception> ErrorLogging; //TODO: Descomentar e adicionar a biblioteca de log.
+
         /// <summary>
         /// Write information message.
         /// </summary>
@@ -58,5 +71,12 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Infrastructure.Logger
         /// <param name="tags">Tags to be logged.</param>
         /// <returns>Running trace.</returns>
         ILogTrace StartDebugTrace(string message, IDictionary<string, object> additionalData = null, bool skipBegin = false, IEnumerable<string> tags = null);
+
+        /// <summary>
+        /// Logs database exception.
+        /// </summary>
+        /// <param name="exception"></param>
+        /// <remarks>SQL Server error codes: "https://docs.microsoft.com/en-us/azure/sql-database/sql-database-develop-error-messages"</remarks>
+        void DatabaseError(Exception exception);
     }
 }

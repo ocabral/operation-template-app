@@ -1,5 +1,4 @@
-﻿using StoneCo.Buy4.OperationTemplate.Core.Validations;
-using StoneCo.Buy4.OperationTemplate.DataContracts.V1;
+﻿using StoneCo.Buy4.OperationTemplate.DataContracts.V1;
 using System;
 using System.Threading.Tasks;
 

@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace StoneCo.Buy4.OperationTemplate.Core.Validations
+namespace StoneCo.Buy4.OperationTemplate.Core.Operations
 {
     public interface IValidation<TRequest, TResponse> : IDisposable
         where TRequest : OperationRequestBase, new()

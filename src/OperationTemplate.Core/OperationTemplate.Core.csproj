@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>StoneCo.Buy4.OperationTemplate.Core</AssemblyName>
     <RootNamespace>StoneCo.Buy4.OperationTemplate.Core</RootNamespace>
-    <Copyright>©StoneCo</Copyright>
+    <Copyright>StoneCo © 2018</Copyright>
     <PackageId>StoneCo.Buy4.OperationTemplate.Core</PackageId>
     <Authors>StoneCo.Buy4.OperationTemplate.Core</Authors>
     <Product>StoneCo.Buy4.OperationTemplate.Core</Product>
@@ -12,6 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="1.50.5" />
     <PackageReference Include="System.Data.SqlClient" Version="4.5.1" />
   </ItemGroup>
 
