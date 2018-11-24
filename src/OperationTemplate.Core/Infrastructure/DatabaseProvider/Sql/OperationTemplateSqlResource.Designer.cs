@@ -80,5 +80,45 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Infrastructure.DatabaseProvider.Sq
                 return ResourceManager.GetString("GetDatabaseInformation", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to INSERT INTO [dbo].[Authentication]
+        ///(
+        ///    [ApplicationName],
+        ///	[ApplicationKey],
+        ///	[ApplicationToken],
+        ///	[IsActive],
+        ///	[CreationDateTime]
+        ///)
+        ///VALUES
+        ///(
+        ///    @ApplicationName,
+        ///	@ApplicationKey,
+        ///	@ApplicationToken,
+        ///	@IsActive,
+        ///	@CreationDateTime
+        ///);
+        ///
+        ///SELECT SCOPE_IDENTITY();.
+        /// </summary>
+        public static string InsertAuthentication {
+            get {
+                return ResourceManager.GetString("InsertAuthentication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UPDATE
+        ///    [dbo].[Authentication]
+        ///SET
+        ///    [IsActive] = @IsActive
+        ///WHERE
+        ///    [ApplicationKey] = @ApplicationKey.
+        /// </summary>
+        public static string UpdateAuthenticationActivation {
+            get {
+                return ResourceManager.GetString("UpdateAuthenticationActivation", resourceCulture);
+            }
+        }
     }
 }

@@ -121,4 +121,10 @@
   <data name="GetDatabaseInformation" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>GetDatabaseInformation.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="InsertAuthentication" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>InsertAuthentication.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="UpdateAuthenticationActivation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>UpdateAuthenticationActivation.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
 </root>
