@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace StoneCo.Buy4.OperationTemplate.Core.Operations.Authentication
 {
+    /// <inheritdoc />
     public class GetAuthentications : OperationBase<GetAuthenticationsRequest, GetAuthenticationsResponse>, IGetAuthentications
     {
         private IAuthenticationRepository _authenticationRepository = null;

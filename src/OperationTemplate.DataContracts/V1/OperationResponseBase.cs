@@ -68,7 +68,7 @@ namespace StoneCo.Buy4.OperationTemplate.DataContracts.V1
         {
             (this.Errors ?? (this.Errors = new List<OperationError>())).Add(operationError);
             this.Success = false;
-            this.HttpStatusCode = HttpStatusCode.BadRequest;
+            this.HttpStatusCode = httpStatusCode;
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace StoneCo.Buy4.OperationTemplate.DataContracts.V1
         public void AddErrors(List<OperationError> operationErrors, HttpStatusCode httpStatusCode = HttpStatusCode.BadRequest)
         {
             this.Success = false;
-            this.HttpStatusCode = HttpStatusCode.BadRequest;
+            this.HttpStatusCode = httpStatusCode;
 
             (this.Errors ?? (this.Errors = new List<OperationError>())).AddRange(operationErrors);
         }
@@ -106,6 +106,19 @@ namespace StoneCo.Buy4.OperationTemplate.DataContracts.V1
             (this.Errors ?? (this.Errors = new List<OperationError>()))
                 .Add(new OperationError("xxx", "An internal server error occurred while processing the request."));
             
+        }
+
+        /// <summary>
+        /// Set success to true.
+        /// The HttpStatusCode will be set to 401 by default.
+        /// </summary>
+        public void SetUnauthorizedError()
+        {
+            this.Success = false;
+            this.HttpStatusCode = HttpStatusCode.Unauthorized;
+
+            (this.Errors ?? (this.Errors = new List<OperationError>()))
+                .Add(new OperationError("xxx", "Unauthorized."));
         }
 
         #endregion
