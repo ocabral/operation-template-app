@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 
@@ -24,7 +25,7 @@ namespace StoneCo.Buy4.OperationTemplate.DataContracts.V1
         /// <summary>
         /// 
         /// </summary>
-        //[JsonIgnore]
+        [JsonIgnore]
         public HttpStatusCode HttpStatusCode { get; set; }
 
         #endregion
