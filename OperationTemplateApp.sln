@@ -7,6 +7,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OperationTemplate.Core", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OperationTemplate.DataContracts", "src\OperationTemplate.DataContracts\OperationTemplate.DataContracts.csproj", "{5D90DB73-1B5B-4578-8368-AE78A0993D65}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OperationTemplate.WebApi", "src\OperationTemplate.WebApi\OperationTemplate.WebApi.csproj", "{48FE7E19-ED70-4EBB-8CFB-F82A1BA4885D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OperationTemplate.UnitTest", "test\OperationTemplate.UnitTest\OperationTemplate.UnitTest.csproj", "{B6011417-AAD3-4951-9BDD-B67A771EFC60}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2D7FDA59-A773-434A-9211-433874A5C3A9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{1E2DE9F7-19BC-40AF-A207-586F6E32D24C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,9 +29,23 @@ Global
 		{5D90DB73-1B5B-4578-8368-AE78A0993D65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D90DB73-1B5B-4578-8368-AE78A0993D65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D90DB73-1B5B-4578-8368-AE78A0993D65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48FE7E19-ED70-4EBB-8CFB-F82A1BA4885D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48FE7E19-ED70-4EBB-8CFB-F82A1BA4885D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48FE7E19-ED70-4EBB-8CFB-F82A1BA4885D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48FE7E19-ED70-4EBB-8CFB-F82A1BA4885D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6011417-AAD3-4951-9BDD-B67A771EFC60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6011417-AAD3-4951-9BDD-B67A771EFC60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6011417-AAD3-4951-9BDD-B67A771EFC60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6011417-AAD3-4951-9BDD-B67A771EFC60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1AF77C60-A6B8-4110-AD88-49BA133221B3} = {2D7FDA59-A773-434A-9211-433874A5C3A9}
+		{5D90DB73-1B5B-4578-8368-AE78A0993D65} = {2D7FDA59-A773-434A-9211-433874A5C3A9}
+		{48FE7E19-ED70-4EBB-8CFB-F82A1BA4885D} = {2D7FDA59-A773-434A-9211-433874A5C3A9}
+		{B6011417-AAD3-4951-9BDD-B67A771EFC60} = {1E2DE9F7-19BC-40AF-A207-586F6E32D24C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EDD7AA0D-28AA-4811-99EA-393D71DEF748}

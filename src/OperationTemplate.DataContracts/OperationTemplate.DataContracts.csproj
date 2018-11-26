@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>StoneCo.Buy4.OperationTemplate.DataContracts</AssemblyName>
+    <AssemblyName>OperationTemplate.DataContracts</AssemblyName>
     <RootNamespace>StoneCo.Buy4.OperationTemplate.DataContracts</RootNamespace>
     <Copyright>StoneCo © 2018</Copyright>
     <PackageId>StoneCo.Buy4.OperationTemplate.DataContracts</PackageId>
