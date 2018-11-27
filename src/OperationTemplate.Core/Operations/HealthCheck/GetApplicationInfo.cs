@@ -16,7 +16,11 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations.HealthCheck
     {
         private DataContracts.V1.HealthCheck.ApplicationType? _applicationType = null;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Class constructor.
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="applicationType"></param>
         public GetApplicationInfo(ILogger logger, DataContracts.V1.HealthCheck.ApplicationType? applicationType = null) : base(logger)
         {
             this._applicationType = applicationType;
