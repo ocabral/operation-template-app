@@ -24,7 +24,7 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Models.HealthCheck
             }
 
             ApplicationComponentInfoResponse response = new ApplicationComponentInfoResponse();
-            response = (ApplicationComponentInfoResponse)ApplicationInfo.MapToResponse(model);
+            response = ApplicationInfo.MapToApplicationComponentInfoResponse(model);
             response.AdditionalData = model.AdditionalData;
 
             return response;

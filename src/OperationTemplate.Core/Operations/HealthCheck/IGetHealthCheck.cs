@@ -2,7 +2,7 @@
 
 namespace StoneCo.Buy4.OperationTemplate.Core.Operations.HealthCheck
 {
-    interface IGetHealthCheck : IOperation<GetHealthCheckRequest, GetHealthCheckResponse>
+    public interface IGetHealthCheck : IOperation<GetHealthCheckRequest, GetHealthCheckResponse>
     {
     }
 }

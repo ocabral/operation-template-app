@@ -2,7 +2,7 @@
 
 namespace StoneCo.Buy4.OperationTemplate.Core.Operations.HealthCheck
 {
-    interface IGetApplicationInfo : IOperation<GetApplicationInfoRequest, GetApplicationInfoResponse>
+    public interface IGetApplicationInfo : IOperation<GetApplicationInfoRequest, GetApplicationInfoResponse>
     {
     }
 }

@@ -29,16 +29,19 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations.HealthCheck
         /// <inheritdoc />
         protected override async Task<GetApplicationInfoResponse> ProcessOperationAsync(GetApplicationInfoRequest request)
         {
+            // This workaround is necessary because the Assembly.GetEntryAssembly() returns null when executing the unit tests.
+            Assembly assembly = Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();
+
             ApplicationInfo applicationInfo = new ApplicationInfo
             {
-                ApplicationName = Assembly.GetEntryAssembly().GetName().Name,
+                ApplicationName = assembly.GetName().Name,
                 ApplicationType = this._applicationType != null ? ((Models.HealthCheck.ApplicationType)this._applicationType) : Models.HealthCheck.ApplicationType.WebService, // Web Service as default value.
-                BuildDate = File.GetLastWriteTime(Assembly.GetEntryAssembly().Location),
+                BuildDate = File.GetLastWriteTime(assembly.Location),
                 MachineName = Environment.MachineName,
                 OS = new Models.HealthCheck.OS { Name = RuntimeInformation.OSDescription.Trim(), Version = Environment.OSVersion.Version.ToString() },
                 Status = Models.HealthCheck.ApplicationStatus.Ok,
                 Timestamp = DateTime.Now,
-                Version = Assembly.GetEntryAssembly().GetName().Version.ToString(),
+                Version = assembly.GetName().Version.ToString(),
             };
 
             var result = new GetApplicationInfoResponse(ApplicationInfo.MapToResponse(applicationInfo));

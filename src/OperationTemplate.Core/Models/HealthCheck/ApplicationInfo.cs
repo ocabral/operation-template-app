@@ -32,6 +32,40 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Models.HealthCheck
 
         #region Mapping
 
+        internal static ApplicationComponentInfoResponse MapToApplicationComponentInfoResponse(ApplicationInfo model)
+        {
+            if (model == null)
+            {
+                return null;
+            }
+
+            ApplicationComponentInfoResponse response = new ApplicationComponentInfoResponse();
+
+            response.AdditionalData = null;
+            response.ApplicationName = model.ApplicationName;
+            response.ApplicationType = (DataContracts.V1.HealthCheck.ApplicationType)model.ApplicationType;
+            response.BuildDate = model.BuildDate;
+            response.MachineName = model.MachineName;
+            //Components = model.Components,
+
+            if (model.OS != null)
+            {
+                response.OS = new DataContracts.V1.HealthCheck.OS()
+                {
+                    Name = model.OS.Name,
+                    Version = model.OS.Version,
+                };
+            }
+
+            response.Status = (DataContracts.V1.HealthCheck.ApplicationStatus)model.Status;
+            response.Timestamp = model.Timestamp;
+            response.Version = model.Version;
+
+            response.SetSuccessOk();
+
+            return response;
+        }
+
         internal static ApplicationInfoResponse MapToResponse(ApplicationInfo model)
         {
             if (model == null)
@@ -39,23 +73,26 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Models.HealthCheck
                 return null;
             }
 
-            ApplicationInfoResponse response = new ApplicationInfoResponse()
+            ApplicationInfoResponse response = new ApplicationInfoResponse();
+
+            response.ApplicationName = model.ApplicationName;
+            response.ApplicationType = (DataContracts.V1.HealthCheck.ApplicationType)model.ApplicationType;
+            response.BuildDate = model.BuildDate;
+            response.MachineName = model.MachineName;
+            //Components = model.Components,
+
+            if (model.OS != null)
             {
-                ApplicationName = model.ApplicationName,
-                ApplicationType = (DataContracts.V1.HealthCheck.ApplicationType)model.ApplicationType,
-                BuildDate = model.BuildDate,
-                MachineName = model.MachineName,
-                //Components = model.Components,
-                OS = new DataContracts.V1.HealthCheck.OS()
+                response.OS = new DataContracts.V1.HealthCheck.OS()
                 {
                     Name = model.OS.Name,
                     Version = model.OS.Version,
-                },
+                };
+            }
 
-                Status = (DataContracts.V1.HealthCheck.ApplicationStatus)model.Status,
-                Timestamp = model.Timestamp,
-                Version = model.Version,
-            };
+            response.Status = (DataContracts.V1.HealthCheck.ApplicationStatus)model.Status;
+            response.Timestamp = model.Timestamp;
+            response.Version = model.Version;
 
             response.SetSuccessOk();
 

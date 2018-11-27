@@ -30,6 +30,11 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations.HealthCheck
         public GetHealthCheck(ILogger logger, IUnitOfWork unitOfWork, DataContracts.V1.HealthCheck.ApplicationType? applicationType = null) : base(logger, null, unitOfWork)
         {
             this._applicationType = applicationType;
+
+            this._unitOfWorkList = new List<IUnitOfWork>
+            {
+                unitOfWork
+            };
         }
 
         /// <summary>
@@ -59,10 +64,13 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations.HealthCheck
         /// <inheritdoc />
         protected override async Task<GetHealthCheckResponse> ProcessOperationAsync(GetHealthCheckRequest request)
         {
+            // This workaround is necessary because the Assembly.GetEntryAssembly() returns null when executing the unit tests.
+            Assembly assembly = Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();
+
             HealthCheckModel healthCheck = new HealthCheckModel();
-            healthCheck.ApplicationName = Assembly.GetEntryAssembly().GetName().Name;
+            healthCheck.ApplicationName = assembly.GetName().Name;
             healthCheck.ApplicationType = this._applicationType != null ? ((Models.HealthCheck.ApplicationType)this._applicationType) : Models.HealthCheck.ApplicationType.WebService; // Web Service as default value.
-            healthCheck.BuildDate = File.GetLastWriteTime(Assembly.GetEntryAssembly().Location);
+            healthCheck.BuildDate = File.GetLastWriteTime(assembly.Location);
 
             healthCheck.Components = new List<ApplicationComponentInfo>();
 
