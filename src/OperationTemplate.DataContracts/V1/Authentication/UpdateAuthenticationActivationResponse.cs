@@ -11,6 +11,6 @@
         /// <summary>
         /// Indicate if the authentication is active / enable.
         /// </summary>
-        public bool IsActive { get; set; }
+        public bool? IsActive { get; set; }
     }
 }

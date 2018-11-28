@@ -27,35 +27,23 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations.Authentication
         {
             using (this.Logger.StartInfoTrace("Starting process for Authentication Update."))
             {
-                try
+                int numberOfAffectedRows = await this._authenticationRepository.UpdateActivation(request.ApplicationKey, request.IsActive).ConfigureAwait(false);
+
+                var response = new UpdateAuthenticationActivationResponse();
+
+                if (numberOfAffectedRows == 1)
                 {
-                    int numberOfAffectedRows = await this._authenticationRepository.UpdateActivation(request.ApplicationKey, request.IsActive).ConfigureAwait(false);
+                    response.ApplicationKey = request.ApplicationKey;
+                    response.IsActive = request.IsActive;
 
-                    var response = new UpdateAuthenticationActivationResponse();
-
-                    if (numberOfAffectedRows == 1)
-                    {
-                        response.ApplicationKey = request.ApplicationKey;
-                        response.IsActive = request.IsActive;
-
-                        response.SetSuccessOk();
-                    }
-                    else
-                    {
-                        response.AddError(new OperationError("xxx", "Requested resource not found."), System.Net.HttpStatusCode.NotFound);
-                    }
-
-                    return response;
+                    response.SetSuccessOk();
                 }
-                catch (Exception ex)
+                else
                 {
-                    this.Logger.Error("Error on UpdateAuthenticationActivation.", ex);
-
-                    var responseError = new UpdateAuthenticationActivationResponse();
-                    responseError.SetInternalServerError();
-
-                    return responseError;
+                    response.AddError(new OperationError("xxx", "Requested resource not found."), System.Net.HttpStatusCode.NotFound);
                 }
+
+                return response;
             }
         }
 
@@ -70,6 +58,7 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations.Authentication
                 if (request == null)
                 {
                     response.AddError(new OperationError("xxx", "Request can not be null."));
+                    return response;
                 }
 
                 if (string.IsNullOrWhiteSpace(request.ApplicationKey))

@@ -30,32 +30,20 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations.Authentication
         {
             using (this.Logger.StartInfoTrace("Starting process for Authentication Get."))
             {
-                try
+                GetAuthenticationsResponse response = new GetAuthenticationsResponse();
+
+                IList<AuthenticationModel> authenticationList = await this._authenticationRepository.GetByFilter(request).ConfigureAwait(false);
+
+                if (authenticationList == null || authenticationList.Count == 0)
                 {
-                    GetAuthenticationsResponse response = new GetAuthenticationsResponse();
-
-                    IList<AuthenticationModel> authenticationList = await this._authenticationRepository.GetByFilter(request).ConfigureAwait(false);
-
-                    if(authenticationList == null || authenticationList.Count == 0)
-                    {
-                        response.AddError(new OperationError("xxx", "Requested resource not found."), HttpStatusCode.NotFound);
-                    }
-
-                    response.Data = AuthenticationModel.MapToResponse(authenticationList);
-
-                    response.SetSuccessOk();
-
-                    return response;
+                    response.AddError(new OperationError("xxx", "Requested resource not found."), HttpStatusCode.NotFound);
                 }
-                catch (Exception ex)
-                {
-                    this.Logger.Error("Error on GetAuthentications.", ex);
 
-                    var responseError = new GetAuthenticationsResponse();
-                    responseError.SetInternalServerError();
+                response.Data = AuthenticationModel.MapToResponse(authenticationList);
 
-                    return responseError;
-                }
+                response.SetSuccessOk();
+
+                return response;
             }
         }
     }

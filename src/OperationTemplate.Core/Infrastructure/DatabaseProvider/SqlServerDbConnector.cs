@@ -13,10 +13,10 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Infrastructure.DatabaseProvider
         private bool _disposed;
 
         /// <inheritdoc />
-        public IDbConnection Connection { get; }
+        public virtual IDbConnection Connection { get; }
 
         /// <inheritdoc />
-        public IDbTransaction Transaction { get; private set; }
+        public virtual IDbTransaction Transaction { get; private set; }
 
         /// <summary>
         /// SqlServerDbConnector public constructor.

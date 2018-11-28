@@ -31,32 +31,20 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations.Authentication
         {
             using (this.Logger.StartInfoTrace("Starting process for Authentication Get."))
             {
-                try
+                GetAuthenticationResponse response = new GetAuthenticationResponse();
+
+                IList<AuthenticationModel> authenticationList = await this._authenticationRepository.GetByFilter(request).ConfigureAwait(false);
+
+                if (authenticationList == null || authenticationList.Count == 0)
                 {
-                    GetAuthenticationResponse response = new GetAuthenticationResponse();
-
-                    IList<AuthenticationModel> authenticationList = await this._authenticationRepository.GetByFilter(request).ConfigureAwait(false);
-
-                    if (authenticationList == null || authenticationList.Count == 0)
-                    {
-                        response.AddError(new OperationError("xxx", "Requested resource not found."), HttpStatusCode.NotFound);
-                    }
-
-                    response.Data = AuthenticationModel.MapToResponse(authenticationList.First());
-
-                    response.SetSuccessOk();
-
-                    return response;
+                    response.AddError(new OperationError("xxx", "Requested resource not found."), HttpStatusCode.NotFound);
                 }
-                catch (Exception ex)
-                {
-                    this.Logger.Error("Error on GetAuthentications.", ex);
 
-                    var responseError = new GetAuthenticationResponse();
-                    responseError.SetInternalServerError();
+                response.Data = AuthenticationModel.MapToResponse(authenticationList.First());
 
-                    return responseError;
-                }
+                response.SetSuccessOk();
+
+                return response;
             }
         }
 
@@ -66,6 +54,12 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations.Authentication
             return await Task.Run(() =>
             {
                 GetAuthenticationResponse response = new GetAuthenticationResponse();
+
+                if (request == null)
+                {
+                    response.AddError(new OperationError("xxx", "Request can not be null."));
+                    return response;
+                }
 
                 if (string.IsNullOrWhiteSpace(request.ApplicationKey))
                 {

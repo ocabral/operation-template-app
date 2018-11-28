@@ -28,37 +28,25 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations.Authentication
         {
             using (this.Logger.StartInfoTrace("Starting process for Authentication Insert."))
             {
-                try
+                AuthenticationModel authentication = new AuthenticationModel()
                 {
-                    AuthenticationModel authentication = new AuthenticationModel()
-                    {
-                        ApplicationKey = Guid.NewGuid().ToString("N"),
-                        ApplicationName = request.ApplicationName,
-                        ApplicationToken = CryptographyExtensions.GenerateRandomClientToken(),
-                        CreationDateTime = DateTimeOffset.UtcNow,
-                        IsActive = true
-                    };
+                    ApplicationKey = Guid.NewGuid().ToString("N"),
+                    ApplicationName = request.ApplicationName,
+                    ApplicationToken = CryptographyExtensions.GenerateRandomClientToken(),
+                    CreationDateTime = DateTimeOffset.UtcNow,
+                    IsActive = true
+                };
 
-                    await this._authenticationRepository.Insert(authentication);
+                await this._authenticationRepository.Insert(authentication);
 
-                    var response = new CreateAuthenticationResponse()
-                    {
-                        Data = AuthenticationModel.MapToResponse(authentication),
-                    };
-
-                    response.SetSuccessOk();
-
-                    return response;
-                }
-                catch (Exception ex)
+                var response = new CreateAuthenticationResponse()
                 {
-                    this.Logger.Error("Error on CreateAuthentication.", ex);
+                    Data = AuthenticationModel.MapToResponse(authentication),
+                };
 
-                    var responseError = new CreateAuthenticationResponse();
-                    responseError.SetInternalServerError();
+                response.SetSuccessOk();
 
-                    return responseError;
-                }
+                return response;
             }
         }
 
@@ -73,6 +61,7 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations.Authentication
                 if (request == null)
                 {
                     response.AddError(new OperationError("xxx", "Request can not be null."));
+                    return response;
                 }
 
                 if (string.IsNullOrWhiteSpace(request.ApplicationName))
