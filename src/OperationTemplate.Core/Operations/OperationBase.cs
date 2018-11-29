@@ -145,12 +145,12 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations
                 pagedRequest.Limit = pagedRequest.Limit ?? this.PaginationSettings.DefaultLimit;
                 pagedRequest.Offset = pagedRequest.Offset ?? this.PaginationSettings.DefaultOffset;
 
-                if (pagedRequest.Limit >= 0)
+                if (pagedRequest.Limit < 0)
                 {
                     return false;
                 }
 
-                if (pagedRequest.Offset >= 0)
+                if (pagedRequest.Offset < 0)
                 {
                     return false;
                 }
@@ -203,9 +203,6 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations
             : base(logger, paginationSettings)
         {
         }
-
-        /// <inheritdoc />
-        protected override abstract Task<TResponse> ProcessOperationAsync(TRequest request);
 
         /// <inheritdoc />
         protected sealed override async Task<TResponse> ValidateOperationAsync(TRequest request) => await (new TValidation()).ValidateOperationAsync(request);

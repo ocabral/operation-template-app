@@ -1,12 +1,8 @@
 ﻿using StoneCo.Buy4.OperationTemplate.Core.Infrastructure.DatabaseProvider.Repositories;
 using StoneCo.Buy4.OperationTemplate.Core.Infrastructure.Logger;
-using StoneCo.Buy4.OperationTemplate.Core.Models.Authentication;
 using StoneCo.Buy4.OperationTemplate.DataContracts.V1;
 using StoneCo.Buy4.OperationTemplate.DataContracts.V1.Authentication;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace StoneCo.Buy4.OperationTemplate.Core.Operations.Authentication
@@ -29,23 +25,26 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations.Authentication
         /// <inheritdoc />
         protected override async Task<GetAuthenticationResponse> ProcessOperationAsync(GetAuthenticationsRequest request)
         {
-            using (this.Logger.StartInfoTrace("Starting process for Authentication Get."))
+            // With the purpose to don't replicate code, this operation calls the GetAuthentications operation, because the code and the rules are the same on both.
+            // The unique difference is the reponse. On GetAuthentication the reponse is AuthenticationResponse and on GetAuthentications the response is IList<AuthenticationResponse>.
+            GetAuthenticationsResponse operationResponse = await new GetAuthentications(this.Logger, this._authenticationRepository)
+                .ProcessAsync(request)
+                .ConfigureAwait(false);
+
+            var response = new GetAuthenticationResponse();
+
+            if (operationResponse.Success)
             {
-                GetAuthenticationResponse response = new GetAuthenticationResponse();
-
-                IList<AuthenticationModel> authenticationList = await this._authenticationRepository.GetByFilter(request).ConfigureAwait(false);
-
-                if (authenticationList == null || authenticationList.Count == 0)
-                {
-                    response.AddError(new OperationError("xxx", "Requested resource not found."), HttpStatusCode.NotFound);
-                }
-
-                response.Data = AuthenticationModel.MapToResponse(authenticationList.First());
-
+                response.Data = operationResponse.Data?.First();
                 response.SetSuccessOk();
-
-                return response;
             }
+            else
+            {
+                response.AddErrors(operationResponse.Errors);
+                response.HttpStatusCode = operationResponse.HttpStatusCode;
+            }
+
+            return response;
         }
 
         /// <inheritdoc />
@@ -54,6 +53,7 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations.Authentication
             return await Task.Run(() =>
             {
                 GetAuthenticationResponse response = new GetAuthenticationResponse();
+                response.SetSuccessOk();
 
                 if (request == null)
                 {
