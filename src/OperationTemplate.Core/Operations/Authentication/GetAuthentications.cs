@@ -46,5 +46,23 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations.Authentication
                 return response;
             }
         }
+
+        /// <inheritdoc />
+        protected override async Task<GetAuthenticationsResponse> ValidateOperationAsync(GetAuthenticationsRequest request)
+        {
+            return await Task.Run(() =>
+            {
+                GetAuthenticationsResponse response = new GetAuthenticationsResponse();
+                response.SetSuccessOk();
+
+                if (request == null)
+                {
+                    response.AddError(new OperationError("xxx", "Request can not be null."));
+                    return response;
+                }
+
+                return response;
+            });
+        }
     }
 }
