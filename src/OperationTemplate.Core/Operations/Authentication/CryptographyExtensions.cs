@@ -17,19 +17,7 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations.Authentication
         /// <returns></returns>
         public static string GetHMACSHA256(this string privateKey, string value)
         {
-            using (HMACSHA256 encrypt = new HMACSHA256(Encoding.UTF8.GetBytes(privateKey)))
-            {
-                byte[] signature = Encoding.UTF8.GetBytes(value);
-                byte[] signatureBytes = encrypt.ComputeHash(signature);
-
-                StringBuilder hashString = new StringBuilder();
-                foreach (byte b in signatureBytes)
-                {
-                    hashString.AppendFormat("{0:x2}", b);
-                }
-
-                return hashString.ToString();
-            }
+            return Convert.ToBase64String(GetHMACSHA256ByteArray(privateKey, value));
         }
 
         /// <summary>

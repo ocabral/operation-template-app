@@ -6,6 +6,7 @@ using System;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.Generic;
+using StoneCo.Buy4.OperationTemplate.DataContracts.V1;
 
 namespace StoneCo.Buy4.OperationTemplate.Core.Operations.Authentication
 {
@@ -13,10 +14,10 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations.Authentication
     public class ValidateAuthentication : OperationBase<ValidateAuthenticationRequest, ValidateAuthenticationResponse>, IValidateAuthentication
     {
         private readonly IAuthenticationRepository _authenticationRepository;
-        private readonly IAuthenticatioMemoryCache _authenticationCache;
+        private readonly IAuthenticationMemoryCache _authenticationCache;
         private readonly int _authorizationTimeoutExpirationInSeconds;
 
-        public ValidateAuthentication(ILogger logger, IAuthenticationRepository authenticationRepository, IAuthenticatioMemoryCache authenticationCache, int authorizationTimeoutExpirationInSeconds = 30)
+        public ValidateAuthentication(ILogger logger, IAuthenticationRepository authenticationRepository, IAuthenticationMemoryCache authenticationCache, int authorizationTimeoutExpirationInSeconds = 30)
             : base(logger)
         {
             this._authenticationRepository = authenticationRepository;
@@ -35,17 +36,17 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations.Authentication
             string clientHash = request.HeaderAuthorizationContent.Substring(firstSplit + 1, secondSplit - (firstSplit + 1));
             string clientTimeStamp = request.HeaderAuthorizationContent.Substring(secondSplit + 1, request.HeaderAuthorizationContent.Length - (secondSplit + 1));
 
-            DateTime clienteTokenDateTime = DateTime.Parse(clientTimeStamp).ToUniversalTime();
+            DateTime clientTokenDateTime = DateTime.Parse(clientTimeStamp).ToUniversalTime();
 
             DateTime futureValidDateTime = DateTime.UtcNow.AddSeconds(this._authorizationTimeoutExpirationInSeconds);
-            if (clienteTokenDateTime > futureValidDateTime)
+            if (clientTokenDateTime > futureValidDateTime)
             {
                 response.SetUnauthorizedError();
                 return response;
             }
 
             DateTime lastValidDateTime = DateTime.UtcNow.AddSeconds(-this._authorizationTimeoutExpirationInSeconds);
-            if (lastValidDateTime >= clienteTokenDateTime)
+            if (lastValidDateTime >= clientTokenDateTime)
             {
                 response.SetUnauthorizedError();
                 return response;
@@ -94,7 +95,7 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations.Authentication
 
                 if (request == null || string.IsNullOrWhiteSpace(request.HeaderAuthorizationContent))
                 {
-                    response.SetUnauthorizedError();
+                    response.AddError(new OperationError("xxx", "Request can not be null"));
                 }
 
                 return response;

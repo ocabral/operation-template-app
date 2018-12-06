@@ -6,7 +6,7 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations.Authentication
     /// <summary>
     /// IAuthenticatioMemoryCache interface.
     /// </summary>
-    public interface IAuthenticatioMemoryCache : IMemoryCacheHelper<string, AuthenticationModel>
+    public interface IAuthenticationMemoryCache : IMemoryCacheHelper<string, AuthenticationModel>
     {
     }
 }
