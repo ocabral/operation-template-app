@@ -65,6 +65,7 @@ namespace StoneCo.Buy4.OperationTemplate.DataContracts.V1
         /// The HttpStatusCode will be set to 400 (BadRequest) by default.
         /// </summary>
         /// <param name="operationError"><see cref="OperationError"/> object.</param>
+        /// <param name="httpStatusCode"></param>
         public void AddError(OperationError operationError, HttpStatusCode httpStatusCode = HttpStatusCode.BadRequest)
         {
             (this.Errors ?? (this.Errors = new List<OperationError>())).Add(operationError);
@@ -77,6 +78,7 @@ namespace StoneCo.Buy4.OperationTemplate.DataContracts.V1
         /// The HttpStatusCode will be set to 400 (BadRequest) by default.
         /// </summary>
         /// <param name="operationErrors">List of <see cref="OperationError"/>.</param>
+        /// <param name="httpStatusCode"></param>
         public void AddErrors(List<OperationError> operationErrors, HttpStatusCode httpStatusCode = HttpStatusCode.BadRequest)
         {
             this.Success = false;

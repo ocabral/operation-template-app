@@ -5,10 +5,27 @@
     <AssemblyName>OperationTemplate.Core</AssemblyName>
     <RootNamespace>StoneCo.Buy4.OperationTemplate.Core</RootNamespace>
     <Copyright>StoneCo © 2018</Copyright>
-    <PackageId>StoneCo.Buy4.OperationTemplate.Core</PackageId>
-    <Authors>StoneCo.Buy4.OperationTemplate.Core</Authors>
-    <Product>StoneCo.Buy4.OperationTemplate.Core</Product>
-    <LangVersion>7.1</LangVersion>
+    <PackageId>OperationTemplate.Core</PackageId>
+    <Company>StoneCo.Buy4</Company>
+    <Authors>$(Company)</Authors>
+    <Product>OperationTemplate.Core</Product>
+  </PropertyGroup>
+
+  <!-- Output path -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\..\artifacts\bin\Debug\Application\</OutputPath>
+    <LangVersion>7.2</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\..\artifacts\bin\Release\Application\</OutputPath>
+    <LangVersion>7.2</LangVersion>
+  </PropertyGroup>
+
+  <!-- Documentation definitions -->
+  <PropertyGroup>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
+    <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

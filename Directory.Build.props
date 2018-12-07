@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+
+  <!-- Setup initial variables if not defined. -->
+	<PropertyGroup>
+		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+		<ProjectRootDir Condition=" '$(ProjectRootDir)' == '' ">$(MSBuildThisFileDirectory)</ProjectRootDir>
+		<NuGetPackagesRootDir Condition=" '$(NuGetPackagesRootDir)' == '' ">$(UserProfile)\.nuget\packages\</NuGetPackagesRootDir>
+    <VersionPrefix>0.1.0</VersionPrefix>
+	</PropertyGroup>
+
+	<!-- Build 'Debug' definitions -->
+	<PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+		<PlatformTarget>AnyCPU</PlatformTarget>
+		<DebugSymbols>True</DebugSymbols>
+		<DebugType>Full</DebugType> <!-- This is for code coverage to work. -->
+		<Optimize>False</Optimize>
+	</PropertyGroup>
+
+	<!-- Build 'Release' definitions -->
+	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
+		<PlatformTarget>AnyCPU</PlatformTarget>
+		<DebugSymbols>True</DebugSymbols>
+		<DebugType>pdbonly</DebugType>
+		<Optimize>True</Optimize>
+	</PropertyGroup>
+
+  <PropertyGroup>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+   
+</Project>

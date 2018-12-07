@@ -9,11 +9,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OperationTemplate.DataContr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OperationTemplate.WebApi", "src\OperationTemplate.WebApi\OperationTemplate.WebApi.csproj", "{48FE7E19-ED70-4EBB-8CFB-F82A1BA4885D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OperationTemplate.UnitTest", "test\OperationTemplate.UnitTest\OperationTemplate.UnitTest.csproj", "{B6011417-AAD3-4951-9BDD-B67A771EFC60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OperationTemplate.UnitTest", "test\OperationTemplate.UnitTest\OperationTemplate.UnitTest.csproj", "{B6011417-AAD3-4951-9BDD-B67A771EFC60}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2D7FDA59-A773-434A-9211-433874A5C3A9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{1E2DE9F7-19BC-40AF-A207-586F6E32D24C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "etc", "etc", "{C271901F-28C8-4F48-98A1-18EE70E6E565}"
+	ProjectSection(SolutionItems) = preProject
+		CHANGELOG.md = CHANGELOG.md
+		Directory.Build.props = Directory.Build.props
+		nuget.config = nuget.config
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
