@@ -57,13 +57,13 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations.Authentication
 
                 if (request == null)
                 {
-                    response.AddError(new OperationError("xxx", "Request can not be null."));
+                    response.AddError(new OperationError(OperationErrorCode.RequestValidationError, "Request can not be null."));
                     return response;
                 }
 
                 if (string.IsNullOrWhiteSpace(request.ApplicationKey))
                 {
-                    response.AddError(new OperationError("xxx", "ApplicationKey can not be null."));
+                    response.AddError(new OperationError(OperationErrorCode.RequestValidationError, "ApplicationKey can not be null."));
                 }
 
                 return response;

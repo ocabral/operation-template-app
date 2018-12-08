@@ -1,9 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
-using StoneCo.Buy4.OperationTemplate.Core.Infrastructure.DatabaseProvider.Repositories;
+﻿using StoneCo.Buy4.OperationTemplate.Core.Infrastructure.DatabaseProvider.Repositories;
 using StoneCo.Buy4.OperationTemplate.Core.Infrastructure.Logger;
 using StoneCo.Buy4.OperationTemplate.DataContracts.V1;
 using StoneCo.Buy4.OperationTemplate.DataContracts.V1.Authentication;
+using System.Threading.Tasks;
 
 namespace StoneCo.Buy4.OperationTemplate.Core.Operations.Authentication
 {
@@ -40,7 +39,7 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations.Authentication
                 }
                 else
                 {
-                    response.AddError(new OperationError("xxx", "Requested resource not found."), System.Net.HttpStatusCode.NotFound);
+                    response.AddError(new OperationError(OperationErrorCode.RequestValidationError, "Requested resource not found."), System.Net.HttpStatusCode.NotFound);
                 }
 
                 return response;
@@ -57,13 +56,13 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations.Authentication
 
                 if (request == null)
                 {
-                    response.AddError(new OperationError("xxx", "Request can not be null."));
+                    response.AddError(new OperationError(OperationErrorCode.RequestValidationError, "Request can not be null."));
                     return response;
                 }
 
                 if (string.IsNullOrWhiteSpace(request.ApplicationKey))
                 {
-                    response.AddError(new OperationError("xxx", "ApplicationKey can not be null."));
+                    response.AddError(new OperationError(OperationErrorCode.RequestValidationError, "ApplicationKey can not be null."));
                 }
 
                 return response;

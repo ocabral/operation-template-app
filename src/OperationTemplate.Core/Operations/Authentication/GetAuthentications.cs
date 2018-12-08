@@ -3,7 +3,6 @@ using StoneCo.Buy4.OperationTemplate.Core.Infrastructure.Logger;
 using StoneCo.Buy4.OperationTemplate.Core.Models.Authentication;
 using StoneCo.Buy4.OperationTemplate.DataContracts.V1;
 using StoneCo.Buy4.OperationTemplate.DataContracts.V1.Authentication;
-using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
@@ -37,7 +36,7 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations.Authentication
 
                 if (authenticationList == null || authenticationList.Count == 0)
                 {
-                    response.AddError(new OperationError("xxx", "Requested resource not found."), HttpStatusCode.NotFound);
+                    response.AddError(new OperationError(OperationErrorCode.RequestValidationError, "Requested resource not found."), HttpStatusCode.NotFound);
                     return response;
                 }
 
@@ -57,7 +56,7 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations.Authentication
 
                 if (request == null)
                 {
-                    response.AddError(new OperationError("xxx", "Request can not be null."));
+                    response.AddError(new OperationError(OperationErrorCode.RequestValidationError, "Request can not be null."));
                     return response;
                 }
 

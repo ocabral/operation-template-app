@@ -98,7 +98,7 @@ namespace StoneCo.Buy4.OperationTemplate.DataContracts.V1
         }
 
         /// <summary>
-        /// Set Successto false.
+        /// Set Success to false.
         /// The HttpStatusCode will be set to 500 (InternalServerError) by default.
         /// </summary>
         public void SetInternalServerError()
@@ -107,12 +107,12 @@ namespace StoneCo.Buy4.OperationTemplate.DataContracts.V1
             this.HttpStatusCode = HttpStatusCode.InternalServerError;
 
             (this.Errors ?? (this.Errors = new List<OperationError>()))
-                .Add(new OperationError("xxx", "An internal server error occurred while processing the request."));
+                .Add(new OperationError(OperationErrorCode.InternalError, "An internal server error occurred while processing the request."));
             
         }
 
         /// <summary>
-        /// Set success to true.
+        /// Set Success to true.
         /// The HttpStatusCode will be set to 401 by default.
         /// </summary>
         public void SetUnauthorizedError()
@@ -121,7 +121,7 @@ namespace StoneCo.Buy4.OperationTemplate.DataContracts.V1
             this.HttpStatusCode = HttpStatusCode.Unauthorized;
 
             (this.Errors ?? (this.Errors = new List<OperationError>()))
-                .Add(new OperationError("xxx", "Unauthorized."));
+                .Add(new OperationError(OperationErrorCode.UnauthorizedError, "Unauthorized."));
         }
 
         #endregion

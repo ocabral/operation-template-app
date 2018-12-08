@@ -82,7 +82,7 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations
 
                     if (this.IsPaginationSettingsValid(request) == false)
                     {
-                        response.AddError(new OperationError("xxx", "Invalid pagination parameters."));
+                        response.AddError(new OperationError(OperationErrorCode.RequestValidationError, "Invalid pagination parameters."));
                         return response;
                     }
 

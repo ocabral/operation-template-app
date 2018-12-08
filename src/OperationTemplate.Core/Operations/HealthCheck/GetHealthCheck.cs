@@ -100,7 +100,7 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations.HealthCheck
             {
                 if (component.Status != Models.HealthCheck.ApplicationStatus.Ok)
                 {
-                    response.AddError(new OperationError("", $"Component '{component.ApplicationName}' is {component.Status}."), HttpStatusCode.ServiceUnavailable);
+                    response.AddError(new OperationError(OperationErrorCode.ServiceUnavailable, $"Component '{component.ApplicationName}' is {component.Status}."), HttpStatusCode.ServiceUnavailable);
                 }
             }
 

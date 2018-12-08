@@ -3,6 +3,7 @@ using Moq;
 using StoneCo.Buy4.OperationTemplate.Core.Infrastructure.DatabaseProvider.Repositories;
 using StoneCo.Buy4.OperationTemplate.Core.Infrastructure.Logger;
 using StoneCo.Buy4.OperationTemplate.Core.Operations.Authentication;
+using StoneCo.Buy4.OperationTemplate.DataContracts.V1;
 using StoneCo.Buy4.OperationTemplate.DataContracts.V1.Authentication;
 using System;
 using System.Collections.Generic;
@@ -90,6 +91,7 @@ namespace StoneCo.Buy4.OperationTemplate.UnitTest.Core.Operations.Authentication
             response.HttpStatusCode.Should().BeEquivalentTo(HttpStatusCode.BadRequest);
             response.Success.Should().BeFalse();
             response.Errors.Count.Should().BeGreaterThan(0);
+            response.Errors.Any(x => x.Code == OperationErrorCode.RequestValidationError).Should().BeTrue();
         }
 
         [Fact]
@@ -123,6 +125,7 @@ namespace StoneCo.Buy4.OperationTemplate.UnitTest.Core.Operations.Authentication
             response.HttpStatusCode.Should().BeEquivalentTo(HttpStatusCode.BadRequest);
             response.Success.Should().BeFalse();
             response.Errors.Count.Should().BeGreaterThan(0);
+            response.Errors.Any(x => x.Code == OperationErrorCode.RequestValidationError).Should().BeTrue();
         }
 
         [Fact]
@@ -156,6 +159,7 @@ namespace StoneCo.Buy4.OperationTemplate.UnitTest.Core.Operations.Authentication
             response.HttpStatusCode.Should().BeEquivalentTo(HttpStatusCode.Unauthorized);
             response.Success.Should().BeFalse();
             response.Errors.Count.Should().BeGreaterThan(0);
+            response.Errors.Any(x => x.Code == OperationErrorCode.UnauthorizedError).Should().BeTrue();
         }
 
         [Fact]
@@ -189,6 +193,7 @@ namespace StoneCo.Buy4.OperationTemplate.UnitTest.Core.Operations.Authentication
             response.HttpStatusCode.Should().BeEquivalentTo(HttpStatusCode.Unauthorized);
             response.Success.Should().BeFalse();
             response.Errors.Count.Should().BeGreaterThan(0);
+            response.Errors.Any(x => x.Code == OperationErrorCode.UnauthorizedError).Should().BeTrue();
         }
 
         [Fact]
@@ -222,6 +227,7 @@ namespace StoneCo.Buy4.OperationTemplate.UnitTest.Core.Operations.Authentication
             response.HttpStatusCode.Should().BeEquivalentTo(HttpStatusCode.Unauthorized);
             response.Success.Should().BeFalse();
             response.Errors.Count.Should().BeGreaterThan(0);
+            response.Errors.Any(x => x.Code == OperationErrorCode.UnauthorizedError).Should().BeTrue();
         }
 
         [Fact]
@@ -254,6 +260,7 @@ namespace StoneCo.Buy4.OperationTemplate.UnitTest.Core.Operations.Authentication
             response.HttpStatusCode.Should().BeEquivalentTo(HttpStatusCode.Unauthorized);
             response.Success.Should().BeFalse();
             response.Errors.Count.Should().BeGreaterThan(0);
+            response.Errors.Any(x => x.Code == OperationErrorCode.UnauthorizedError).Should().BeTrue();
         }
 
         [Fact]
@@ -289,6 +296,7 @@ namespace StoneCo.Buy4.OperationTemplate.UnitTest.Core.Operations.Authentication
             response.HttpStatusCode.Should().BeEquivalentTo(HttpStatusCode.Unauthorized);
             response.Success.Should().BeFalse();
             response.Errors.Count.Should().BeGreaterThan(0);
+            response.Errors.Any(x => x.Code == OperationErrorCode.UnauthorizedError).Should().BeTrue();
         }
     }
 }

@@ -4,6 +4,7 @@ using Moq;
 using StoneCo.Buy4.OperationTemplate.Core.Infrastructure.DatabaseProvider;
 using StoneCo.Buy4.OperationTemplate.Core.Infrastructure.Logger;
 using StoneCo.Buy4.OperationTemplate.Core.Operations.HealthCheck;
+using StoneCo.Buy4.OperationTemplate.DataContracts.V1;
 using StoneCo.Buy4.OperationTemplate.DataContracts.V1.HealthCheck;
 using System;
 using System.Collections.Generic;
@@ -239,6 +240,7 @@ namespace StoneCo.Buy4.OperationTemplate.UnitTest.Core.Operations.HealthCheck
             response.ApplicationType.Should().BeEquivalentTo(ApplicationType.WebService);
             response.BuildDate.ToString().Should().NotBeNullOrWhiteSpace();
             response.Errors.Count().Should().BeGreaterThan(0);
+            response.Errors.Any(x => x.Code == OperationErrorCode.ServiceUnavailable).Should().BeTrue();
             response.Components.Count().Should().Be(3);
         }
 
@@ -280,6 +282,7 @@ namespace StoneCo.Buy4.OperationTemplate.UnitTest.Core.Operations.HealthCheck
             response.ApplicationType.Should().BeEquivalentTo(ApplicationType.WebService);
             response.BuildDate.ToString().Should().NotBeNullOrWhiteSpace();
             response.Errors.Count().Should().BeGreaterThan(0);
+            response.Errors.Any(x => x.Code == OperationErrorCode.ServiceUnavailable).Should().BeTrue();
             response.Components.Count().Should().Be(2);
         }
     }

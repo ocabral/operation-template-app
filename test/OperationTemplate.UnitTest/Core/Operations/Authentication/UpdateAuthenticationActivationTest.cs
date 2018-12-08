@@ -3,7 +3,9 @@ using Moq;
 using StoneCo.Buy4.OperationTemplate.Core.Infrastructure.DatabaseProvider.Repositories;
 using StoneCo.Buy4.OperationTemplate.Core.Infrastructure.Logger;
 using StoneCo.Buy4.OperationTemplate.Core.Operations.Authentication;
+using StoneCo.Buy4.OperationTemplate.DataContracts.V1;
 using StoneCo.Buy4.OperationTemplate.DataContracts.V1.Authentication;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Xunit;
@@ -63,6 +65,7 @@ namespace StoneCo.Buy4.OperationTemplate.UnitTest.Core.Operations.Authentication
             response.HttpStatusCode.Should().BeEquivalentTo(HttpStatusCode.BadRequest);
             response.Success.Should().BeFalse();
             response.Errors.Should().NotBeNullOrEmpty();
+            response.Errors.Any(x => x.Code == OperationErrorCode.RequestValidationError).Should().BeTrue();
             response.ApplicationKey.Should().BeNull();
             response.IsActive.Should().BeNull();
         }
@@ -92,6 +95,7 @@ namespace StoneCo.Buy4.OperationTemplate.UnitTest.Core.Operations.Authentication
             response.HttpStatusCode.Should().BeEquivalentTo(HttpStatusCode.BadRequest);
             response.Success.Should().BeFalse();
             response.Errors.Should().NotBeNullOrEmpty();
+            response.Errors.Any(x => x.Code == OperationErrorCode.RequestValidationError).Should().BeTrue();
             response.ApplicationKey.Should().BeNull();
             response.IsActive.Should().BeNull();
         }
@@ -121,6 +125,7 @@ namespace StoneCo.Buy4.OperationTemplate.UnitTest.Core.Operations.Authentication
             response.HttpStatusCode.Should().BeEquivalentTo(HttpStatusCode.NotFound);
             response.Success.Should().BeFalse();
             response.Errors.Should().NotBeNullOrEmpty();
+            response.Errors.Any(x => x.Code == OperationErrorCode.RequestValidationError).Should().BeTrue();
             response.ApplicationKey.Should().BeNull();
             response.IsActive.Should().BeNull();
         }

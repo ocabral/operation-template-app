@@ -1,12 +1,11 @@
 ﻿using StoneCo.Buy4.OperationTemplate.Core.Infrastructure.DatabaseProvider.Repositories;
 using StoneCo.Buy4.OperationTemplate.Core.Infrastructure.Logger;
 using StoneCo.Buy4.OperationTemplate.Core.Models.Authentication;
+using StoneCo.Buy4.OperationTemplate.DataContracts.V1;
 using StoneCo.Buy4.OperationTemplate.DataContracts.V1.Authentication;
 using System;
-using System.Threading.Tasks;
 using System.Linq;
-using System.Collections.Generic;
-using StoneCo.Buy4.OperationTemplate.DataContracts.V1;
+using System.Threading.Tasks;
 
 namespace StoneCo.Buy4.OperationTemplate.Core.Operations.Authentication
 {
@@ -95,7 +94,7 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations.Authentication
 
                 if (request == null || string.IsNullOrWhiteSpace(request.HeaderAuthorizationContent))
                 {
-                    response.AddError(new OperationError("xxx", "Request can not be null"));
+                    response.AddError(new OperationError(OperationErrorCode.RequestValidationError, "Request can not be null"));
                 }
 
                 return response;
