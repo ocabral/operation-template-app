@@ -27,23 +27,20 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations.Authentication
         /// <inheritdoc />
         protected override async Task<GetAuthenticationsResponse> ProcessOperationAsync(GetAuthenticationsRequest request)
         {
-            using (this.Logger.StartInfoTrace("Starting process for Authentication Get."))
+            GetAuthenticationsResponse response = new GetAuthenticationsResponse();
+            response.SetSuccessOk();
+
+            IList<AuthenticationModel> authenticationList = await this._authenticationRepository.GetByFilter(request).ConfigureAwait(false);
+
+            if (authenticationList == null || authenticationList.Count == 0)
             {
-                GetAuthenticationsResponse response = new GetAuthenticationsResponse();
-                response.SetSuccessOk();
-
-                IList<AuthenticationModel> authenticationList = await this._authenticationRepository.GetByFilter(request).ConfigureAwait(false);
-
-                if (authenticationList == null || authenticationList.Count == 0)
-                {
-                    response.AddError(new OperationError(OperationErrorCode.RequestValidationError, "Requested resource not found."), HttpStatusCode.NotFound);
-                    return response;
-                }
-
-                response.Data = AuthenticationModel.MapToResponse(authenticationList);
-
+                response.AddError(new OperationError(OperationErrorCode.RequestValidationError, "Requested resource not found."), HttpStatusCode.NotFound);
                 return response;
             }
+
+            response.Data = AuthenticationModel.MapToResponse(authenticationList);
+
+            return response;
         }
 
         /// <inheritdoc />

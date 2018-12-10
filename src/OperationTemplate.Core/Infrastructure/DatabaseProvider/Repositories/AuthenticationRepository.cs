@@ -1,4 +1,6 @@
 ﻿using Dapper;
+using StoneCo.Buy4.Infrastructure;
+using StoneCo.Buy4.Infrastructure.PerformanceCounters;
 using StoneCo.Buy4.OperationTemplate.Core.Configurations;
 using StoneCo.Buy4.OperationTemplate.Core.Infrastructure.DatabaseProvider.Sql;
 using StoneCo.Buy4.OperationTemplate.Core.Infrastructure.Logger;
@@ -9,6 +11,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,94 +29,96 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Infrastructure.DatabaseProvider.Re
         /// <inheritdoc />
         public async Task<IList<AuthenticationModel>> GetByFilter(GetAuthenticationsRequest request)
         {
-            using (this.Logger.StartInfoTrace("Starting database access for Authentication GetByFilter."))
+            try
             {
-                try
+                IList<AuthenticationModel> result = new List<AuthenticationModel>();
+
+                DynamicParameters parameters = new DynamicParameters();
+                string sql = OperationTemplateSqlResource.InsertAuthentication;
+                string sqlWithFilters = this.BuildGetAuthenticationSqlFilter(sql, request, parameters);
+                string sqlWithFiltersAndPaging = this.BuildPagingSql(sqlWithFilters, request.Limit.Value, request.Offset.Value);
+
+                IEnumerable<AuthenticationModel> queryResult = null;
+
+                using (OperationContext.Current.Counters.MeasureTime(AppGlobal.MeasureTimeExternalServicesKey, AppGlobal.DatabaseKey, this.GetType().Name, MethodBase.GetCurrentMethod().Name))
                 {
-                    IList<AuthenticationModel> result = new List<AuthenticationModel>();
-
-                    DynamicParameters parameters = new DynamicParameters();
-                    string sql = OperationTemplateSqlResource.InsertAuthentication;
-                    string sqlWithFilters = this.BuildGetAuthenticationSqlFilter(sql, request, parameters);
-                    string sqlWithFiltersAndPaging = this.BuildPagingSql(sqlWithFilters, request.Limit.Value, request.Offset.Value);
-
                     using (var connection = new SqlConnection(this.DatabaseSettings.ConnectionString))
                     {
                         connection.Open();
-                        IEnumerable<AuthenticationModel> queryResult = await connection
+                        queryResult = await connection
                             .QueryAsync<AuthenticationModel>(sqlWithFiltersAndPaging, parameters, commandTimeout: this.DatabaseSettings.QueryTimeoutInSeconds)
                             .ConfigureAwait(false);
-
-                        return queryResult.ToList();
                     }
                 }
-                catch (Exception ex)
-                {
-                    this.Logger.DatabaseError(ex);
-                    throw;
-                }
+
+                return queryResult?.ToList();
+            }
+            catch (Exception ex)
+            {
+                this.Logger.DatabaseError(ex);
+                throw;
             }
         }
 
         /// <inheritdoc />
         public async Task<AuthenticationModel> Insert(AuthenticationModel authentication)
         {
-            using (this.Logger.StartInfoTrace("Starting database access for Authentication Insert."))
+            try
             {
-                try
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@ApplicationName", new DbString { Value = authentication.ApplicationName, IsAnsi = true, IsFixedLength = false });
+                parameters.Add("@ApplicationKey", new DbString { Value = authentication.ApplicationKey, IsAnsi = true, IsFixedLength = true, Length = 32 });
+                parameters.Add("@ApplicationToken", new DbString { Value = authentication.ApplicationName, IsAnsi = true, IsFixedLength = false });
+                parameters.Add("@IsActive", authentication.IsActive, DbType.Boolean);
+                parameters.Add("@CreationDateTime", authentication.CreationDateTime, DbType.DateTimeOffset);
+
+                string sql = OperationTemplateSqlResource.InsertAuthentication;
+
+                using (OperationContext.Current.Counters.MeasureTime(AppGlobal.MeasureTimeExternalServicesKey, AppGlobal.DatabaseKey, this.GetType().Name, MethodBase.GetCurrentMethod().Name))
                 {
-                    DynamicParameters parameters = new DynamicParameters();
-                    parameters.Add("@ApplicationName", new DbString { Value = authentication.ApplicationName, IsAnsi = true, IsFixedLength = false });
-                    parameters.Add("@ApplicationKey", new DbString { Value = authentication.ApplicationKey, IsAnsi = true, IsFixedLength = true, Length = 32 });
-                    parameters.Add("@ApplicationToken", new DbString { Value = authentication.ApplicationName, IsAnsi = true, IsFixedLength = false });
-                    parameters.Add("@IsActive", authentication.IsActive, DbType.Boolean);
-                    parameters.Add("@CreationDateTime", authentication.CreationDateTime, DbType.DateTimeOffset);
-
-                    string sql = OperationTemplateSqlResource.InsertAuthentication;
-
                     using (var connection = new SqlConnection(this.DatabaseSettings.ConnectionString))
                     {
                         connection.Open();
                         authentication.Id = await connection.ExecuteScalarAsync<int>(sql, parameters);
                     }
+                }
 
-                    return authentication;
-                }
-                catch (Exception ex)
-                {
-                    this.Logger.DatabaseError(ex);
-                    throw;
-                }
+                return authentication;
+            }
+            catch (Exception ex)
+            {
+                this.Logger.DatabaseError(ex);
+                throw;
             }
         }
 
         /// <inheritdoc />
         public async Task<int> UpdateActivation(string applicationKey, bool activate)
         {
-            using (this.Logger.StartInfoTrace("Starting database access for Authentication UpdateActivation."))
+            try
             {
-                try
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@ApplicationKey", new DbString { Value = applicationKey, IsAnsi = true, IsFixedLength = true, Length = 32 });
+                parameters.Add("@IsActive", activate, DbType.Boolean);
+
+                string sql = OperationTemplateSqlResource.UpdateAuthenticationActivation;
+                int numberOfAffectedRows = 0;
+
+                using (OperationContext.Current.Counters.MeasureTime(AppGlobal.MeasureTimeExternalServicesKey, AppGlobal.DatabaseKey, this.GetType().Name, MethodBase.GetCurrentMethod().Name))
                 {
-                    DynamicParameters parameters = new DynamicParameters();
-                    parameters.Add("@ApplicationKey", new DbString { Value = applicationKey, IsAnsi = true, IsFixedLength = true, Length = 32 });
-                    parameters.Add("@IsActive", activate, DbType.Boolean);
-
-                    string sql = OperationTemplateSqlResource.UpdateAuthenticationActivation;
-                    int numberOfAffectedRows = 0;
-
                     using (var connection = new SqlConnection(this.DatabaseSettings.ConnectionString))
                     {
                         connection.Open();
                         numberOfAffectedRows = await connection.ExecuteScalarAsync<int>(sql, parameters);
                     }
+                }
 
-                    return numberOfAffectedRows;
-                }
-                catch (Exception ex)
-                {
-                    this.Logger.DatabaseError(ex);
-                    throw;
-                }
+                return numberOfAffectedRows;
+            }
+            catch (Exception ex)
+            {
+                this.Logger.DatabaseError(ex);
+                throw;
             }
         }
 
@@ -161,7 +166,7 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Infrastructure.DatabaseProvider.Re
 
             return sqlTemplate.Replace("#WHERE", sqlWhere.ToString());
         }
-        
+
         #endregion
     }
 }

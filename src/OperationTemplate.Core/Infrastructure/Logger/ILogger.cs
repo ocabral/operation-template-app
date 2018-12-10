@@ -53,24 +53,24 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Infrastructure.Logger
         void Error(string message, Exception exception = null, IDictionary<string, object> additionalData = null, IEnumerable<string> tags = null);
 
         /// <summary>
-        /// Create and start a trace, stopped when disposed.
+        /// Create and start a performance trace, stopped when disposed.
         /// </summary>
         /// <param name="message">Message to be logged in the trace.</param>
+        /// <param name="target"></param>
         /// <param name="additionalData">Additional data to be logged in the trace.</param>
-        /// <param name="skipBegin">If true, trace will log only the end (PerformanceTrace); if false, trace will log start and end (ContextTrace)</param>
         /// <param name="tags">Tags to be logged.</param>
         /// <returns>Running trace.</returns>
-        ILogTrace StartInfoTrace(string message, IDictionary<string, object> additionalData = null, bool skipBegin = false, IEnumerable<string> tags = null);
+        ILogTrace StartPerformanceTrace(string message, string target, IDictionary<string, object> additionalData = null, IEnumerable<string> tags = null);
 
         /// <summary>
-        /// Create and start a debug trace, stopped when disposed.
+        /// Create and start an activity trace, stopped when disposed.
         /// </summary>
         /// <param name="message">Message to be logged in the trace.</param>
+        /// <param name="target"></param>
         /// <param name="additionalData">Additional data to be logged in the trace.</param>
-        /// <param name="skipBegin">If true, trace will log only the end (PerformanceTrace); if false, trace will log start and end (ContextTrace)</param>
         /// <param name="tags">Tags to be logged.</param>
         /// <returns>Running trace.</returns>
-        ILogTrace StartDebugTrace(string message, IDictionary<string, object> additionalData = null, bool skipBegin = false, IEnumerable<string> tags = null);
+        ILogTrace StartActivityTrace(string message, string target, IDictionary<string, object> additionalData = null, IEnumerable<string> tags = null);
 
         /// <summary>
         /// Logs database exception.

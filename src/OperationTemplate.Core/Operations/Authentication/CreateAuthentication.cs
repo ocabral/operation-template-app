@@ -26,28 +26,25 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations.Authentication
         /// <inheritdoc />
         protected override async Task<CreateAuthenticationResponse> ProcessOperationAsync(CreateAuthenticationRequest request)
         {
-            using (this.Logger.StartInfoTrace("Starting process for Authentication Insert."))
+            AuthenticationModel authentication = new AuthenticationModel()
             {
-                AuthenticationModel authentication = new AuthenticationModel()
-                {
-                    ApplicationKey = Guid.NewGuid().ToString("N"),
-                    ApplicationName = request.ApplicationName,
-                    ApplicationToken = CryptographyExtensions.GenerateRandomClientToken(),
-                    CreationDateTime = DateTimeOffset.UtcNow,
-                    IsActive = true
-                };
+                ApplicationKey = Guid.NewGuid().ToString("N"),
+                ApplicationName = request.ApplicationName,
+                ApplicationToken = CryptographyExtensions.GenerateRandomClientToken(),
+                CreationDateTime = DateTimeOffset.UtcNow,
+                IsActive = true
+            };
 
-                await this._authenticationRepository.Insert(authentication);
+            await this._authenticationRepository.Insert(authentication);
 
-                var response = new CreateAuthenticationResponse()
-                {
-                    Data = AuthenticationModel.MapToResponse(authentication),
-                };
+            var response = new CreateAuthenticationResponse()
+            {
+                Data = AuthenticationModel.MapToResponse(authentication),
+            };
 
-                response.SetSuccessOk();
+            response.SetSuccessOk();
 
-                return response;
-            }
+            return response;
         }
 
         /// <inheritdoc />

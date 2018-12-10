@@ -24,26 +24,23 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations.Authentication
         /// <inheritdoc />
         protected override async Task<UpdateAuthenticationActivationResponse> ProcessOperationAsync(UpdateAuthenticationActivationRequest request)
         {
-            using (this.Logger.StartInfoTrace("Starting process for Authentication Update."))
+            int numberOfAffectedRows = await this._authenticationRepository.UpdateActivation(request.ApplicationKey, request.IsActive).ConfigureAwait(false);
+
+            var response = new UpdateAuthenticationActivationResponse();
+
+            if (numberOfAffectedRows == 1)
             {
-                int numberOfAffectedRows = await this._authenticationRepository.UpdateActivation(request.ApplicationKey, request.IsActive).ConfigureAwait(false);
+                response.ApplicationKey = request.ApplicationKey;
+                response.IsActive = request.IsActive;
 
-                var response = new UpdateAuthenticationActivationResponse();
-
-                if (numberOfAffectedRows == 1)
-                {
-                    response.ApplicationKey = request.ApplicationKey;
-                    response.IsActive = request.IsActive;
-
-                    response.SetSuccessOk();
-                }
-                else
-                {
-                    response.AddError(new OperationError(OperationErrorCode.RequestValidationError, "Requested resource not found."), System.Net.HttpStatusCode.NotFound);
-                }
-
-                return response;
+                response.SetSuccessOk();
             }
+            else
+            {
+                response.AddError(new OperationError(OperationErrorCode.RequestValidationError, "Requested resource not found."), System.Net.HttpStatusCode.NotFound);
+            }
+
+            return response;
         }
 
         /// <inheritdoc />
