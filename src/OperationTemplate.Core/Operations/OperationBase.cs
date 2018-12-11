@@ -68,7 +68,7 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Operations
         {
             try
             {
-                using (this.Logger?.StartPerformanceTrace($"Performance trace of operation '{this.GetType().Name}'.", this.GetType().Name))
+                using (this.Logger?.StartPerformanceTrace($"Operation '{this.GetType().Name}'.", this.GetType().Name))
                 {
                     TResponse response = new TResponse();
 

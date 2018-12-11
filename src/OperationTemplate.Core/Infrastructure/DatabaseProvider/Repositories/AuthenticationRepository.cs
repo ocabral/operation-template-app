@@ -40,7 +40,7 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Infrastructure.DatabaseProvider.Re
 
                 IEnumerable<AuthenticationModel> queryResult = null;
 
-                using (OperationContext.Current.Counters.MeasureTime(AppGlobal.MeasureTimeExternalServicesKey, AppGlobal.DatabaseKey, this.GetType().Name, MethodBase.GetCurrentMethod().Name))
+                using (OperationContext.Current?.Counters.MeasureTime(AppGlobal.MeasureTimeExternalServicesKey, AppGlobal.DatabaseKey, this.GetType().Name, nameof(GetByFilter)))
                 {
                     using (var connection = new SqlConnection(this.DatabaseSettings.ConnectionString))
                     {
@@ -55,7 +55,7 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Infrastructure.DatabaseProvider.Re
             }
             catch (Exception ex)
             {
-                this.Logger.DatabaseError(ex);
+                this.Logger?.DatabaseError(ex);
                 throw;
             }
         }
@@ -74,7 +74,7 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Infrastructure.DatabaseProvider.Re
 
                 string sql = OperationTemplateSqlResource.InsertAuthentication;
 
-                using (OperationContext.Current.Counters.MeasureTime(AppGlobal.MeasureTimeExternalServicesKey, AppGlobal.DatabaseKey, this.GetType().Name, MethodBase.GetCurrentMethod().Name))
+                using (OperationContext.Current?.Counters.MeasureTime(AppGlobal.MeasureTimeExternalServicesKey, AppGlobal.DatabaseKey, this.GetType().Name, nameof(Insert)))
                 {
                     using (var connection = new SqlConnection(this.DatabaseSettings.ConnectionString))
                     {
@@ -87,7 +87,7 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Infrastructure.DatabaseProvider.Re
             }
             catch (Exception ex)
             {
-                this.Logger.DatabaseError(ex);
+                this.Logger?.DatabaseError(ex);
                 throw;
             }
         }
@@ -104,7 +104,7 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Infrastructure.DatabaseProvider.Re
                 string sql = OperationTemplateSqlResource.UpdateAuthenticationActivation;
                 int numberOfAffectedRows = 0;
 
-                using (OperationContext.Current.Counters.MeasureTime(AppGlobal.MeasureTimeExternalServicesKey, AppGlobal.DatabaseKey, this.GetType().Name, MethodBase.GetCurrentMethod().Name))
+                using (OperationContext.Current?.Counters.MeasureTime(AppGlobal.MeasureTimeExternalServicesKey, AppGlobal.DatabaseKey, this.GetType().Name, nameof(UpdateActivation)))
                 {
                     using (var connection = new SqlConnection(this.DatabaseSettings.ConnectionString))
                     {
@@ -117,7 +117,7 @@ namespace StoneCo.Buy4.OperationTemplate.Core.Infrastructure.DatabaseProvider.Re
             }
             catch (Exception ex)
             {
-                this.Logger.DatabaseError(ex);
+                this.Logger?.DatabaseError(ex);
                 throw;
             }
         }

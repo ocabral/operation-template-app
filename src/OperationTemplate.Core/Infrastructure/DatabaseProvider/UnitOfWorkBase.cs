@@ -5,7 +5,6 @@ using StoneCo.Buy4.OperationTemplate.Core.Infrastructure.Logger;
 using StoneCo.Buy4.OperationTemplate.Core.Models.HealthCheck;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
